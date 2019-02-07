@@ -5,7 +5,8 @@ Instructions:
 
 Constraints:
     - Your solution will be run in a Python2.7 environment.
-    - Only python standard library imports can be used and they must be imported within `path_exists`.
+    - Only python standard library imports can be used and they must be imported
+      within `path_exists`.
     - The function signature of `path_exists` cannot be modified.
     - Additional functions can be included, but must be defined within `path_exists`.
     - There will be two sets of input, small and large, each with different time limits.
@@ -19,7 +20,8 @@ def path_exists(grid, queries):
 
     The rules for a path are as follows:
         - A path consists of only up-down-left-right segments (no diagonals).
-        - A path must consist of the same values. i.e. if grid[i1][j1] == 1, the path is comprised of only 1's.
+        - A path must consist of the same values. i.e. if grid[i1][j1] == 1, the path is
+          comprised of only 1's.
 
     Examples:
         grid (visual only)
@@ -42,41 +44,33 @@ def path_exists(grid, queries):
     :rtype:             list[bool]
     """
 
+    # def display_grid(grid):
+    #     for row in grid:
+    #         print(row)
 
-    '''
-    Edge Cases : input not valid
-    Cases:
-        only 1 1
-        dfs breaks
-    '''
-
-    def display_grid(grid):
-        for row in grid:
-            print(row)
-
-    def check_valid_neighbors(row, col, row_max, col_max, visited):
+    def check_valid_neighbors(row, col):
         row_check = [-1, 1, 0, 0]
         col_check = [0, 0, -1, 1]
-        valid_neighbors = []
+        valid_neighbors_list = []
 
-        for r ,c in zip(row_check, col_check):
-            if row + r >= 0 and row + r < row_max and col + c >= 0 and col + c < col_max:
+        for r_move, c_move in zip(row_check, col_check):
+            if 0 <= row + r_move < row_max and 0 <= col + c_move < col_max:
                 # print('row value being checked')
                 # print(row+r)
                 # print('col value being checked')
                 # print(col+c)
-                if grid[row+r][col+c] and not visited[row+r][col+c]:
-                    valid_neighbors.append((row+r, col+c))
+                if grid[row+r_move][col+c_move] and not visited[row+r_move][col+c_move]:
+                    valid_neighbors_list.append((row+r_move, col+c_move))
                     # print('location to be updated row: {} and col: {}'.format(row + r, col + c))
                     # x = row+r
                     # y = col+c
                     # print('x', x)
                     # print('y', y)
-                    visited[row+r][col+c] = True
+                    visited[row+r_move][col+c_move] = True
                     # print('--- in function call----')
                     # display_grid(visited)
                     # print('--- after function call----')
-        return valid_neighbors, visited
+        return valid_neighbors_list, visited
 
 
     # def is_valid_input(start_row_idx, start_col_idx , end_row_idx, end_col_idx):
@@ -151,7 +145,7 @@ def path_exists(grid, queries):
                 result[i] = True
                 break
             visited[node[0]][node[1]] = True
-            valid_neighbors, visited = check_valid_neighbors(node[0], node[1], row_max, col_max, visited)
+            valid_neighbors, visited = check_valid_neighbors(node[0], node[1])
             # display_grid(visited)
             # if valid_neighbors:
                 # print('list extended')
@@ -165,13 +159,13 @@ def path_exists(grid, queries):
     # raise NotImplementedError
 
 
-queries = [((-1, 1), (4, 8)), ((1, 1), (4, 4)), ((0, 1), (4, 4))]
-# queries = [((0, 0), (6, 6)), ((1, 1), (4, 4)), ((0, 1), (4, 4)), ((0, 0), (0, 4)), ((0, 0), (6, 3))]
-grid = [[1, 1, 1, 0, 1, 0, 1],
+# queries = [((-1, 1), (4, 8)), ((1, 1), (4, 4)), ((0, 1), (4, 4))]
+QUERIES = [((0, 0), (6, 6)), ((1, 1), (4, 4)), ((0, 1), (4, 4)), ((0, 0), (0, 4)), ((0, 0), (6, 3))]
+GRID = [[1, 1, 1, 0, 1, 0, 1],
         [1, 0, 1, 1, 0, 1, 0],
         [1, 1, 0, 1, 0, 1, 1],
         [0, 1, 1, 1, 0, 1, 1],
         [0, 1, 1, 1, 1, 0, 1],
         [1, 1, 0, 0, 1, 1, 1],
         [1, 1, 1, 1, 0, 0, 0]]
-print(path_exists(grid, queries))
+print(path_exists(GRID, QUERIES))
