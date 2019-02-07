@@ -72,7 +72,7 @@ def path_exists(grid, queries):
 
 
         # Validate the query input
-        visited = [[False for _ in range(col_max)] for _ in range(col_max)]
+        visited = [[False for _ in range(col_max)] for _ in range(row_max)]
         # If the value at start-index or value at end-index is not 1
         try:
             start_row_idx = query[0][0]
