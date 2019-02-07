@@ -69,15 +69,17 @@ def path_exists(grid, queries):
     queue = []
 
     for i, query in enumerate(queries):
-        start_row_idx = query[0][0]
-        start_col_idx = query[0][1]
-        end_row_idx = query[1][0]
-        end_col_idx = query[1][1]
+
 
         # Validate the query input
         visited = [[False for _ in range(col_max)] for _ in range(col_max)]
         # If the value at start-index or value at end-index is not 1
         try:
+            start_row_idx = query[0][0]
+            start_col_idx = query[0][1]
+            end_row_idx = query[1][0]
+            end_col_idx = query[1][1]
+
             if start_row_idx < 0 or start_row_idx >= row_max or \
                     start_col_idx < 0 or start_col_idx >= col_max or \
                     end_row_idx < 0 or end_row_idx >= row_max or \
